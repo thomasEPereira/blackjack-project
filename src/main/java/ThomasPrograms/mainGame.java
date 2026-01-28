@@ -10,11 +10,9 @@ public class mainGame
     static List dealerHand = new ArrayList<>();
     public void game()
     {
-        draw(dealerHand);
-        draw(dealerHand);
+        doubleDraw(dealerHand);
         System.out.println("The dealer has a " + dealerHand.get(1) + " and 1 flipped over card.");
-        draw(playersHand);
-        draw(playersHand);
+        doubleDraw(playersHand);
         while (true)
         {
             System.out.println(playersHand);
@@ -30,11 +28,20 @@ public class mainGame
                 System.out.println("You stood.");
                 break;
             }
+            else if (input.equals("double"))
+            {
+                System.out.println("You drew a " + deck.getFirst() + "and a " + deck.get(1));
+                doubleDraw(playersHand);
+            }
             else
             {
                 System.out.println("Invalid input. Please input hit or stand.");
             }
         }
+        System.out.println("The dealer flips over a " + dealerHand.get(0) + ".");
+        optimizations.timer(200);
+        System.out.println("The dealer has a hand of " + dealerHand.get(0) + " and " + dealerHand.get(1) + ".");
+        System.out.println("The dealer has a total of ");
     }
 
     public void draw(List hand)
@@ -42,9 +49,16 @@ public class mainGame
         hand.add(deck.getFirst());
         deck.removeFirst();
     }
-    public void double(List hand)
+
+    public void doubleDraw(List hand)
     {
         draw(hand);
         draw(hand);
     }
+
+//    public static int handTotal(int total)
+//    {
+//        total =
+//    }
+
 }
