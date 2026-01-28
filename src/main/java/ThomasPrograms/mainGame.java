@@ -6,23 +6,29 @@ import java.util.List;
 public class mainGame
 {
     static List deck = shuffle.createDeck();
-    static List hand = new ArrayList<>();
+    static List playersHand = new ArrayList<>();
+    static List dealerHand = new ArrayList<>();
     public void game()
     {
-        draw();
+        draw(dealerHand);
+        draw(dealerHand);
+        System.out.println("The dealer has a " + dealerHand.get(1) + " and 1 flipped over card.");
+        draw(playersHand);
+        draw(playersHand);
         while (true)
         {
-            System.out.println(hand);
+            System.out.println(playersHand);
             String input = IO.readln("Hit or Stand?\n");
             input = optimizations.decapitalizeInput(input);
             if (input.equals("hit"))
             {
                 System.out.println("You drew a " + deck.getFirst() + "!");
-                draw();
+                draw(playersHand);
             }
             else if (input.equals("stand"))
             {
                 System.out.println("You stood.");
+                break;
             }
             else
             {
@@ -31,9 +37,14 @@ public class mainGame
         }
     }
 
-    public void draw()
+    public void draw(List hand)
     {
         hand.add(deck.getFirst());
         deck.removeFirst();
+    }
+    public void double(List hand)
+    {
+        draw(hand);
+        draw(hand);
     }
 }
