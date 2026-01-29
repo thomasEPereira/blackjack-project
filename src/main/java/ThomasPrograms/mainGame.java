@@ -41,7 +41,7 @@ public class mainGame
         System.out.println("The dealer flips over a " + dealerHand.get(0) + ".");
         optimizations.timer(200);
         System.out.println("The dealer has a hand of " + dealerHand.get(0) + " and " + dealerHand.get(1) + ".");
-        System.out.println("The dealer has a total of ");
+        System.out.println("The dealer has a total of " + handTotal());
     }
 
     public void draw(List hand)
@@ -56,9 +56,22 @@ public class mainGame
         draw(hand);
     }
 
-//    public static int handTotal(int total)
-//    {
-//        total =
-//    }
+    public static int handTotal()
+    {
+        int count = 0;
+        int index = 0;
+        for (int x = dealerHand.size(); x > 0; x--)
+        {
+            count = convertToNumber(index);
+            count++;
+        }
+        return (count);
+    }
+
+    public static int convertToNumber(int index)
+    {
+        String number = dealerHand.get(index).toString();
+        return(Integer.parseInt(String.valueOf(number.charAt(1))));
+    }
 
 }
