@@ -9,10 +9,33 @@ public class mainGame
     static List deck = shuffle.createDeck();
     static List playersHand = new ArrayList<>();
     static List dealerHand = new ArrayList<>();
+    static int credits = 10;
+    static int betAmount;
     public void game()
     {
         while (true)
         {
+            while (true)
+            {
+                System.out.println("You have " + credits + " credits.");
+                try
+                {
+                    betAmount = Integer.parseInt(IO.readln("How many credits do you want to bet?\n"));
+                }
+                catch (Exception e)
+                {
+                    System.out.println("Please input an value.");
+                    continue;
+                }
+                if (betAmount > credits)
+                {
+                    System.out.println("You only have " + credits + ". Please bet an amount you can afford.");
+                    continue;
+                }
+                System.out.println("You are betting " + betAmount + " credits.\n\n");
+                credits -= betAmount;
+                break;
+            }
             doubleDraw(dealerHand);
             System.out.println("The dealer has a " + dealerHand.get(1) + " and 1 flipped over card.");
             doubleDraw(playersHand);
@@ -63,20 +86,29 @@ public class mainGame
                 System.out.println("The dealers ends his turn with a " + handTotal(dealerHand) + ". And a hand of " + dealerHand + ".");
                 break;
             }
-            determineWin(playersTotal,dealersTotal);
+            boolean win = determineWin(playersTotal,dealersTotal);
+            if (win)
+            {
+                credits += betAmount*2;
+            }
+            if (credits == 0)
+            {
+                System.out.println("Your all out of money.");
+                break;
+            }
             String input = IO.readln("Play again?\n");
-            if (Objects.equals(optimizations.decapitalizeInput(input), "yes"))
+            if (Objects.equals(optimizations.decapitalizeInput(input), "no"))
+            {
+                System.out.println("Quiting game.");
+                break;
+            }
+            else
             {
                 System.out.println("Restarting\n\n\n");
                 optimizations.timer(500);
                 deck = shuffle.createDeck();
                 clearHand(playersHand);
                 clearHand(dealerHand);
-            }
-            else
-            {
-                System.out.println("Quiting game.");
-                break;
             }
         }
     }
@@ -138,35 +170,42 @@ public class mainGame
             hand.removeFirst();
         }
     }
-    public void determineWin(int playersTotal, int dealersTotal)
+    public static boolean determineWin(int playersTotal, int dealersTotal)
     {
         if (playersTotal == dealersTotal)
         {
             System.out.println("You tied.");
+            return true;
         }
         else if (playersTotal > dealersTotal && playersTotal <= 21)
         {
             System.out.println("You beat the dealer.");
+            return true;
         }
         else if (playersTotal < dealersTotal && dealersTotal <= 21)
         {
             System.out.println("You lost to the dealer.");
+            return false;
         }
         else if (playersTotal > dealersTotal)
         {
             System.out.println("You busted.");
+            return false;
         }
         else if (playersTotal == 21)
         {
             System.out.println("You won with exactly 21.");
+            return true;
         }
         else if (playersTotal > 21)
         {
             System.out.println("You both busted, but you had a lower total then the dealer.");
+            return true;
         }
         else
         {
             System.out.println("You beat the dealer.");
+            return true;
         }
     }
 }
