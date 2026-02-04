@@ -3,6 +3,7 @@ package ThomasPrograms;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class mainGame
 {
@@ -12,10 +13,11 @@ public class mainGame
     static int credits = 10;
     static int betAmount;
     static String input;
-    static int ace_value1 = 0;
-    static int ace_value2 = 0;
-    static int ace_value3 = 0;
-    static int ace_value4 = 0;
+    static String[] possibleAceValues = {String.valueOf(1),String.valueOf(11)};
+    static int aceValue1 = 0;
+    static int aceValue2 = 0;
+    static int aceValue3 = 0;
+    static int aceValue4 = 0;
     public void game()
     {
         while (true)
@@ -118,10 +120,10 @@ public class mainGame
                 deck = shuffle.createDeck();
                 clearHand(playersHand);
                 clearHand(dealerHand);
-                ace_value1 = 0;
-                ace_value2 = 0;
-                ace_value3 = 0;
-                ace_value4 = 0;
+                aceValue1 = 0;
+                aceValue2 = 0;
+                aceValue3 = 0;
+                aceValue4 = 0;
             }
         }
     }
@@ -133,21 +135,69 @@ public class mainGame
         deck.removeFirst();
         if (hand == playersHand && String.valueOf(card.charAt(0)).equals("A"))
         {
-            if (ace_value1 == 0)
+            switch (String.valueOf(card.charAt(7)))
             {
-                ace_value1 = Integer.parseInt(IO.readln("Do you want your ace to be an 11 or a 1? "));
+                case "C" ->
+                        aceValue1 = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
+                case "D" ->
+                        aceValue2 = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
+                case "H" ->
+                        aceValue3 = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
+                case "S"  ->
+                        aceValue4 = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
             }
-            else if (ace_value2 == 0)
+        }
+        else
+        {
+            switch (String.valueOf(card.charAt(7)))
             {
-                ace_value2 = Integer.parseInt(IO.readln("Do you want your ace to be an 11 or a 1? "));
-            }
-            else if (ace_value3 == 0)
-            {
-                ace_value3 = Integer.parseInt(IO.readln("Do you want your ace to be an 11 or a 1? "));
-            }
-            else
-            {
-                ace_value4 = Integer.parseInt(IO.readln("Do you want your ace to be an 11 or a 1? "));
+                case "C" ->
+                {
+                    if (handTotal(dealerHand) <= 10)
+                    {
+                        aceValue1 = 11;
+                    }
+                    else
+                    {
+                        aceValue1 = 1;
+                    }
+                }
+                case "D" ->
+                {
+                    if (handTotal(dealerHand) <= 10)
+                    {
+                        aceValue2 = 11;
+                    }
+                    else
+                    {
+                        aceValue2 = 1;
+                    }
+                }
+                case "H" ->
+                {
+                    if (handTotal(dealerHand) <= 10)
+                    {
+                        Random randNum = new Random();
+
+                        aceValue3 = randNum.nextInt(1,11);
+                        aceValue3 = 11;
+                    }
+                    else
+                    {
+                        aceValue3 = 1;
+                    }
+                }
+                case "S" ->
+                 {
+                    if (handTotal(dealerHand) <= 10)
+                    {
+                        aceValue1 = 11;
+                    }
+                    else
+                    {
+                        aceValue2 = 1;
+                    }
+                }
             }
         }
 
@@ -175,14 +225,24 @@ public class mainGame
     {
         String num = hand.get(index).toString();
         String number = String.valueOf(num.charAt(0));
-        int value;
+        int value = 0;
         if (number.equals("J") || number.equals("K") || number.equals("Q"))
         {
             value = 10;
         }
         else if (number.equals("A"))
         {
-            value = ace_value1;
+            switch (String.valueOf(num.charAt(7)))
+            {
+                case "C" ->
+                        value = aceValue1;
+                case "D" ->
+                        value = aceValue2;
+                case "H" ->
+                        value = aceValue3;
+                case "S"  ->
+                        value = aceValue4;
+            }
         }
         else
         {
