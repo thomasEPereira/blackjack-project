@@ -11,6 +11,11 @@ public class mainGame
     static List dealerHand = new ArrayList<>();
     static int credits = 10;
     static int betAmount;
+    static String input;
+    static int ace_value1 = 0;
+    static int ace_value2 = 0;
+    static int ace_value3 = 0;
+    static int ace_value4 = 0;
     public void game()
     {
         while (true)
@@ -55,9 +60,11 @@ public class mainGame
                         System.out.println("You stood.");
                         break label;
                     case "double":
-                        System.out.println("You drew a " + deck.getFirst() + "and a " + deck.get(1));
+                        System.out.println("You drew a " + deck.getFirst() + " and a " + deck.get(1));
                         doubleDraw(playersHand);
                         break;
+                    case "credits":
+                        System.out.println("You have " + credits + " credits.");
                     default:
                         System.out.println("Invalid input. Please input hit or stand.");
                         break;
@@ -96,10 +103,12 @@ public class mainGame
                 System.out.println("Your all out of money.");
                 break;
             }
-            String input = IO.readln("Play again?\n");
+            System.out.println("You now have " + credits + " credits.");
+            input = IO.readln("Play again?\n");
             if (Objects.equals(optimizations.decapitalizeInput(input), "no"))
             {
                 System.out.println("Quiting game.");
+                System.out.println("You left with " + credits + " credits.");
                 break;
             }
             else
@@ -109,14 +118,39 @@ public class mainGame
                 deck = shuffle.createDeck();
                 clearHand(playersHand);
                 clearHand(dealerHand);
+                ace_value1 = 0;
+                ace_value2 = 0;
+                ace_value3 = 0;
+                ace_value4 = 0;
             }
         }
     }
 
     public void draw(List hand)
     {
-        hand.add(deck.getFirst());
+        String card = deck.getFirst().toString();
+        hand.add(card);
         deck.removeFirst();
+        if (hand == playersHand && String.valueOf(card.charAt(0)).equals("A"))
+        {
+            if (ace_value1 == 0)
+            {
+                ace_value1 = Integer.parseInt(IO.readln("Do you want your ace to be an 11 or a 1? "));
+            }
+            else if (ace_value2 == 0)
+            {
+                ace_value2 = Integer.parseInt(IO.readln("Do you want your ace to be an 11 or a 1? "));
+            }
+            else if (ace_value3 == 0)
+            {
+                ace_value3 = Integer.parseInt(IO.readln("Do you want your ace to be an 11 or a 1? "));
+            }
+            else
+            {
+                ace_value4 = Integer.parseInt(IO.readln("Do you want your ace to be an 11 or a 1? "));
+            }
+        }
+
     }
 
     public void doubleDraw(List hand)
@@ -148,7 +182,7 @@ public class mainGame
         }
         else if (number.equals("A"))
         {
-            value = 1;
+            value = ace_value1;
         }
         else
         {
