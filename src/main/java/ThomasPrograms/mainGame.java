@@ -67,6 +67,7 @@ public class mainGame
                         break;
                     case "credits":
                         System.out.println("You have " + credits + " credits.");
+                        break;
                     default:
                         System.out.println("Invalid input. Please input hit or stand.");
                         break;
@@ -138,13 +139,13 @@ public class mainGame
             switch (String.valueOf(card.charAt(7)))
             {
                 case "C" ->
-                        aceValue1 = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
+                        aceValue1 = dertermineAce();
                 case "D" ->
-                        aceValue2 = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
+                        aceValue2 = dertermineAce();
                 case "H" ->
-                        aceValue3 = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
+                        aceValue3 = dertermineAce();
                 case "S"  ->
-                        aceValue4 = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
+                        aceValue4 = dertermineAce();
             }
         }
         else
@@ -177,9 +178,6 @@ public class mainGame
                 {
                     if (handTotal(dealerHand) <= 10)
                     {
-                        Random randNum = new Random();
-
-                        aceValue3 = randNum.nextInt(1,11);
                         aceValue3 = 11;
                     }
                     else
@@ -301,5 +299,20 @@ public class mainGame
             System.out.println("You beat the dealer.");
             return true;
         }
+    }
+    public static int dertermineAce()
+    {
+        int aceValue;
+        while (true)
+        {
+            System.out.println("You have a hand of " + playersHand + ".");
+            aceValue = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
+            if (aceValue == 11 || aceValue == 1){break;}
+            else
+            {
+                System.out.println("Please input a 1 or 11.\n");
+            }
+        }
+        return aceValue;
     }
 }
