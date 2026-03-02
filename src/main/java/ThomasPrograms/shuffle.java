@@ -20,7 +20,6 @@ public class shuffle
                 deck.add(rank + " of " + suit);
             }
         }
-//        deck.add("Universal Ace");
         return shuffle(deck);
     }
     public static List shuffle(List deck)

@@ -139,13 +139,13 @@ public class mainGame
             switch (String.valueOf(card.charAt(7)))
             {
                 case "C" ->
-                        aceValue1 = dertermineAce();
+                        aceValue1 = dertermineAce(playersHand);
                 case "D" ->
-                        aceValue2 = dertermineAce();
+                        aceValue2 = dertermineAce(playersHand);
                 case "H" ->
-                        aceValue3 = dertermineAce();
+                        aceValue3 = dertermineAce(playersHand);
                 case "S"  ->
-                        aceValue4 = dertermineAce();
+                        aceValue4 = dertermineAce(playersHand);
             }
         }
         else
@@ -153,49 +153,13 @@ public class mainGame
             switch (String.valueOf(card.charAt(7)))
             {
                 case "C" ->
-                {
-                    if (handTotal(dealerHand) <= 10)
-                    {
-                        aceValue1 = 11;
-                    }
-                    else
-                    {
-                        aceValue1 = 1;
-                    }
-                }
+                    aceValue1 = dertermineAce(dealerHand);
                 case "D" ->
-                {
-                    if (handTotal(dealerHand) <= 10)
-                    {
-                        aceValue2 = 11;
-                    }
-                    else
-                    {
-                        aceValue2 = 1;
-                    }
-                }
+                    aceValue2 = dertermineAce(dealerHand);
                 case "H" ->
-                {
-                    if (handTotal(dealerHand) <= 10)
-                    {
-                        aceValue3 = 11;
-                    }
-                    else
-                    {
-                        aceValue3 = 1;
-                    }
-                }
+                    aceValue3 = dertermineAce(dealerHand);
                 case "S" ->
-                 {
-                    if (handTotal(dealerHand) <= 10)
-                    {
-                        aceValue1 = 11;
-                    }
-                    else
-                    {
-                        aceValue2 = 1;
-                    }
-                }
+                    aceValue4 = dertermineAce(dealerHand);
             }
         }
 
@@ -266,7 +230,7 @@ public class mainGame
     {
         if (playersTotal == dealersTotal)
         {
-            System.out.println("You tied.");
+            System.out.println(" You tied.");
             return true;
         }
         else if (playersTotal > dealersTotal && playersTotal <= 21)
@@ -300,17 +264,34 @@ public class mainGame
             return true;
         }
     }
-    public static int dertermineAce()
+    public static int dertermineAce(List hand)
     {
         int aceValue;
-        while (true)
+        if (hand == playersHand)
         {
-            System.out.println("You have a hand of " + playersHand + ".");
-            aceValue = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
-            if (aceValue == 11 || aceValue == 1){break;}
+            while (true)
+            {
+                System.out.println("You have a hand of " + playersHand + ".");
+                aceValue = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
+                if (aceValue == 11 || aceValue == 1)
+                {
+                    break;
+                }
+                else
+                {
+                    System.out.println("Please input a 1 or 11.\n");
+                }
+            }
+        }
+        else
+        {
+            if (handTotal(hand) <= 10)
+            {
+                aceValue = 11;
+            }
             else
             {
-                System.out.println("Please input a 1 or 11.\n");
+                aceValue = 1;
             }
         }
         return aceValue;
