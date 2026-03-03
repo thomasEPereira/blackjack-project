@@ -122,8 +122,8 @@ public class mainGame
                 System.out.println("The dealers ends his turn with a " + handTotal(dealerHand) + ". And a hand of " + dealerHand + ".\n");
                 break;
             }
-            boolean win = determineWin(playersTotal, dealersTotal, player2Total);
-            if (win)
+            boolean isWin = determineWin(playersTotal, dealersTotal, player2Total);
+            if (isWin)
             {
                 credits += (int) (betAmount*1.5);
             }
@@ -234,41 +234,56 @@ public class mainGame
     }
     public static boolean determineWin(int playersTotal, int dealersTotal, int player2Total)
     {
+        boolean isWin;
         if (playersTotal == dealersTotal)
         {
             System.out.println(" You tied.");
-            return true;
+            isWin = true;
         }
         else if (playersTotal > dealersTotal && playersTotal <= 21)
         {
             System.out.println("You beat the dealer.");
-            return true;
+            isWin = true;
         }
         else if (playersTotal < dealersTotal && dealersTotal <= 21)
         {
             System.out.println("You lost to the dealer.");
-            return false;
+            isWin = false;
         }
         else if (playersTotal > dealersTotal)
         {
             System.out.println("You busted.");
-            return false;
+            isWin = false;
         }
         else if (playersTotal == 21)
         {
             System.out.println("You won with exactly 21.");
-            return true;
+            isWin = true;
         }
         else if (playersTotal > 21)
         {
             System.out.println("You both busted, but you had a lower total then the dealer.");
-            return true;
+            isWin = true;
         }
         else
         {
             System.out.println("You beat the dealer.");
-            return true;
+            isWin = true;
         }
+
+        if (player2Total > dealersTotal)
+        {
+            System.out.println("\nThe other player won.\n");
+        }
+        else if (player2Total == dealersTotal)
+        {
+            System.out.println("\nThe other player tied with the dealer.\n");
+        }
+        else
+        {
+            System.out.println("\nThe other player lost.\n");
+        }
+        return isWin;
     }
     public void assignAceValue(List hand, String card)
     {
