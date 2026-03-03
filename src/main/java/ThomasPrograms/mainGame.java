@@ -9,15 +9,15 @@ public class mainGame
 {
     static List deck = shuffle.createDeck();
     static List playersHand = new ArrayList<>();
+    static List player2Hand = new ArrayList<>();
     static List dealerHand = new ArrayList<>();
-    static int credits = 10;
-    static int betAmount;
+    static float credits = 10;
+    static float betAmount;
     static String input;
-    static String[] possibleAceValues = {String.valueOf(1),String.valueOf(11)};
-    static int aceValue1 = 0;
-    static int aceValue2 = 0;
-    static int aceValue3 = 0;
-    static int aceValue4 = 0;
+    static int aceValue1;
+    static int aceValue2;
+    static int aceValue3;
+    static int aceValue4;
     public void game()
     {
         while (true)
@@ -45,6 +45,8 @@ public class mainGame
             }
             doubleDraw(dealerHand);
             System.out.println("The dealer has a " + dealerHand.get(1) + " and 1 flipped over card.");
+            doubleDraw(player2Hand);
+            System.out.println("The other player has a hand of " + player2Hand + ".");
             doubleDraw(playersHand);
             label:
             while (true)
@@ -76,11 +78,35 @@ public class mainGame
             int playersTotal = handTotal(playersHand);
             System.out.println("You have a total of " + playersTotal + ".\n");
             optimizations.timer(1500);
+
+            System.out.println("The other player starts their turn.");
+            System.out.println("The other player has a hand of " + player2Hand.get(0) + " and " + player2Hand.get(1) + ".");
+            int player2Total = handTotal(player2Hand);
+            System.out.println("Their hand has a total of " + player2Total + ".\n");
+            optimizations.timer(4000);
+            while (true)
+            {
+                if (player2Total < 17)
+                {
+                    System.out.println("The other player hits.");
+                    draw(player2Hand);
+                    System.out.println("The dealer passes a card to the other player and flips it over.");
+                    System.out.println("The other player drew a " + player2Hand.getLast() + ".");
+                    player2Total = handTotal(playersHand);
+                    System.out.println("The other player now has a total of " + player2Total + ".\n");
+                    optimizations.timer(3000);
+                    continue;
+                }
+                System.out.println("The other player ends their with a " + player2Total + ". And a hand of " + player2Hand + ".\n");
+                break;
+            }
+            optimizations.timer((1500));
+
             System.out.println("The dealer flips over a " + dealerHand.get(0) + ".");
             System.out.println("The dealer has a hand of " + dealerHand.get(0) + " and " + dealerHand.get(1) + ".");
             int dealersTotal = handTotal(dealerHand);
             System.out.println("The dealer has a total of " + dealersTotal + ".\n");
-            optimizations.timer(5000);
+            optimizations.timer(4000);
             while (true)
             {
                 if (dealersTotal < 17)
@@ -93,13 +119,13 @@ public class mainGame
                     optimizations.timer(3000);
                     continue;
                 }
-                System.out.println("The dealers ends his turn with a " + handTotal(dealerHand) + ". And a hand of " + dealerHand + ".");
+                System.out.println("The dealers ends his turn with a " + handTotal(dealerHand) + ". And a hand of " + dealerHand + ".\n");
                 break;
             }
-            boolean win = determineWin(playersTotal,dealersTotal);
+            boolean win = determineWin(playersTotal, dealersTotal, player2Total);
             if (win)
             {
-                credits += betAmount*2;
+                credits += (int) (betAmount*1.5);
             }
             if (credits == 0)
             {
@@ -134,35 +160,19 @@ public class mainGame
         String card = deck.getFirst().toString();
         hand.add(card);
         deck.removeFirst();
-        if (hand == playersHand && String.valueOf(card.charAt(0)).equals("A"))
+        final boolean isAce = String.valueOf(card.charAt(0)).equals("A");
+        if (hand == playersHand && isAce)
         {
-            switch (String.valueOf(card.charAt(7)))
-            {
-                case "C" ->
-                        aceValue1 = dertermineAce(playersHand);
-                case "D" ->
-                        aceValue2 = dertermineAce(playersHand);
-                case "H" ->
-                        aceValue3 = dertermineAce(playersHand);
-                case "S"  ->
-                        aceValue4 = dertermineAce(playersHand);
-            }
+            assignAceValue(playersHand, card);
         }
-        else
+        else if (hand == dealerHand && isAce)
         {
-            switch (String.valueOf(card.charAt(7)))
-            {
-                case "C" ->
-                    aceValue1 = dertermineAce(dealerHand);
-                case "D" ->
-                    aceValue2 = dertermineAce(dealerHand);
-                case "H" ->
-                    aceValue3 = dertermineAce(dealerHand);
-                case "S" ->
-                    aceValue4 = dertermineAce(dealerHand);
-            }
+            assignAceValue(dealerHand, card);
         }
-
+        else if (hand == player2Hand && isAce)
+        {
+            assignAceValue(player2Hand, card);
+        }
     }
 
     public void doubleDraw(List hand)
@@ -196,14 +206,10 @@ public class mainGame
         {
             switch (String.valueOf(num.charAt(7)))
             {
-                case "C" ->
-                        value = aceValue1;
-                case "D" ->
-                        value = aceValue2;
-                case "H" ->
-                        value = aceValue3;
-                case "S"  ->
-                        value = aceValue4;
+                case "C" -> value = aceValue1;
+                case "D" -> value = aceValue2;
+                case "H" -> value = aceValue3;
+                case "S"  -> value = aceValue4;
             }
         }
         else
@@ -226,7 +232,7 @@ public class mainGame
             hand.removeFirst();
         }
     }
-    public static boolean determineWin(int playersTotal, int dealersTotal)
+    public static boolean determineWin(int playersTotal, int dealersTotal, int player2Total)
     {
         if (playersTotal == dealersTotal)
         {
@@ -264,6 +270,17 @@ public class mainGame
             return true;
         }
     }
+    public void assignAceValue(List hand, String card)
+    {
+        switch (String.valueOf(card.charAt(7)))
+        {
+            case "C" -> aceValue1 = dertermineAce(hand);
+            case "D" -> aceValue2 = dertermineAce(hand);
+            case "H" -> aceValue3 = dertermineAce(hand);
+            case "S" -> aceValue4 = dertermineAce(hand);
+        }
+    }
+
     public static int dertermineAce(List hand)
     {
         int aceValue;
