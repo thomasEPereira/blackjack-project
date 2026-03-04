@@ -5,11 +5,20 @@ public class Main
 {
     static startGame start = new startGame();
     static rules rules = new rules();
-    static mainGame game = new mainGame();
+    static blackjack blackjack = new blackjack();
+    static slots slots = new slots();
     static void main()
     {
-        start.startGame();
-        rules.rules();
-        game.game();
+        String game = start.startGame();
+        if (game.equals("blackjack"))
+        {
+            rules.rules(game);
+            blackjack.game();
+        }
+        else
+        {
+            rules.rules(game);
+            slots.game();
+        }
     }
 }

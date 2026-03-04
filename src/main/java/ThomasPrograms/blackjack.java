@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class mainGame
+public class blackjack
 {
     static List deck = shuffle.createDeck();
     static List playersHand = new ArrayList<>();

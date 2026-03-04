@@ -3,19 +3,19 @@ package ThomasPrograms;
 
 public class startGame
 {
-    public void startGame()
+    public String startGame()
     {
         clearCMD clear = new clearCMD();
+        String shouldStart;
         while(true)
         {
-             String shouldStart = IO.readln("To start the game type start.\n");
+             shouldStart = IO.readln("To start blackjack type blackjack.\nTo start slots type slots\n");
              shouldStart = optimizations.decapitalizeInput(shouldStart);
-             if (!shouldStart.equals("start"))
+             if (shouldStart.equals("blackjack") || shouldStart.equals("slots"))
              {
-                 System.out.println("Not a valid input. Please input start.");
-                 continue;
+                 break;
              }
-             break;
+             System.out.println("Not a valid input. Please input slots or blackjack.");
         }
         System.out.println("Starting.");
         optimizations.timer(500);
@@ -24,5 +24,6 @@ public class startGame
         System.out.println("Starting...");
         optimizations.timer(500);
         clear.clearCMD();
+        return (shouldStart);
     }
 }
