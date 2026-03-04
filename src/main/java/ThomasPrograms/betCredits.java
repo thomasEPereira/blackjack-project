@@ -1,3 +1,4 @@
+//betCredits.java
 package ThomasPrograms;
 
 public class betCredits

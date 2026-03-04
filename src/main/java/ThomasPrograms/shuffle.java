@@ -7,11 +7,11 @@ import java.util.Collections;
 
 public class shuffle
 {
-    public static List createDeck()
+    public static List<String> createDeck()
     {
         String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
         String[] ranks = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
-        List deck = new ArrayList<>(52);
+        List<String> deck = new ArrayList<>(52);
 
         for (String suit : suits)
         {
@@ -22,7 +22,7 @@ public class shuffle
         }
         return shuffle(deck);
     }
-    public static List shuffle(List deck)
+    public static List<String> shuffle(List<String> deck)
     {
         Collections.shuffle(deck);
         return(deck);

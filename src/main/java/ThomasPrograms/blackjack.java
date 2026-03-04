@@ -1,4 +1,4 @@
-//mainGame.java
+//blackjack.java
 package ThomasPrograms;
 
 import java.util.ArrayList;
@@ -22,27 +22,7 @@ public class blackjack
     {
         while (true)
         {
-            while (true)
-            {
-                System.out.println("You have " + credits + " credits.");
-                try
-                {
-                    betAmount = Integer.parseInt(IO.readln("How many credits do you want to bet?\n"));
-                }
-                catch (Exception e)
-                {
-                    System.out.println("Please input an value.");
-                    continue;
-                }
-                if (betAmount > credits)
-                {
-                    System.out.println("You only have " + credits + ". Please bet an amount you can afford.");
-                    continue;
-                }
-                System.out.println("You are betting " + betAmount + " credits.\n\n");
-                credits -= betAmount;
-                break;
-            }
+            betCredits.bet(credits);
             doubleDraw(dealerHand);
             System.out.println("The dealer has a " + dealerHand.get(1) + " and 1 flipped over card.");
             doubleDraw(player2Hand);
