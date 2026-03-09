@@ -22,12 +22,12 @@ public class rules
                     "|    COMBO    |    PAYOUT   |\n" +
                     "|___________________________|\n" +
                     "|     ♣♣♣     |     5x      |\n" +
-                    "|     $$$     |     10x     |\n" +
-                    "|    3xBAR    |     30x     |\n" +
+                    "|     ¢¢¢     |     10x     |\n" +
+                    "|     $$$     |     30x     |\n" +
                     "|     777     |     200x    |\n" +
                     "|     ♦♦♦     |    1000x    |\n" +
                     "-----------------------------\n" +
-                    "You can also get a Wildcard represented by *\nWildcards can be used as any symbol.\nAfter making a bet, type pull to start rolling symbols.\n\nType anything to start to the game");
+                    "You can also get a Wildcard represented by *\nWildcards can be used as any symbol.\nAfter making a bet, type pull to start rolling symbols.\n\nType anything to start to the game.\n");
             clear.clearCMD();
         }
     }

@@ -2,15 +2,22 @@
 package ThomasPrograms;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class slots
 {
     static float credits = 1000;
     static float betAmount;
+    static String machineSlot1;
+    static String machineSlot2;
+    static String machineSlot3;
     static clearCMD clear = new clearCMD();
-    static String[] symbols = {"♣", "$", "BAR", "7", "♦"};
+    static String[] symbols = {"♦", "7", "★", "$", "♣"};
     public void game()
     {
+        List probabilitys = setProbability();
+        System.out.println(probabilitys);
         while (true)
         {
             betAmount = betCredits.bet(credits);
@@ -20,11 +27,11 @@ public class slots
                     |                             |
                     |   -----    -----    -----   |
                     |   |   |    |   |    |   |   |
-                    |   -----    -----    -----   |
-                    |             ___             |
-                    |            |___|            |
-                    |             | |             |
-                    |             | |             |
+                    |   -----    -----    -----   |     __
+                    |                             |    / /
+                    |                             |   / /
+                    |                             |  / /
+                    |                             | /_/
                     -------------------------------
                     """);
             while (true)
@@ -42,11 +49,25 @@ public class slots
                     |                             |
                     |   -----    -----    -----   |
                     |   |   |    |   |    |   |   |
-                    |   -----    -----    -----   |
+                    |   -----    -----    -----   |       __
+                    |                             |      / /
+                    |                             |     / /
+                    |                             |   / /
+                    |                             | /_/
+                    -------------------------------
+                    """);
+            optimizations.timer(500);
+            clear.clearCMD();
+            System.out.println("""
+                    -------------------------------
                     |                             |
-                    |             ___             |
-                    |            |___|            |
-                    |             | |             |
+                    |   -----    -----    -----   |
+                    |   |   |    |   |    |   |   |
+                    |   -----    -----    -----   |
+                    |                             |       __
+                    |                             |     / /
+                    |                             |   / /
+                    |                             | /_/
                     -------------------------------
                     """);
             optimizations.timer(500);
@@ -58,11 +79,45 @@ public class slots
                     |   |   |    |   |    |   |   |
                     |   -----    -----    -----   |
                     |                             |
+                    |                             |    __
+                    |                             |   / /
+                    |                             | / /
+                    -------------------------------
+                    """);
+            optimizations.timer(500);
+            clear.clearCMD();
+            randomizeSlots();
+            System.out.println("""
+                    -------------------------------
                     |                             |
-                    |             ___             |
-                    |            |___|            |
+                    |   -----    -----    -----   |
+                    |   |   |    |   |    |   |   |
+                    |   -----    -----    -----   |
+                    |                             |
+                    |                             |    __
+                    |                             |   / /
+                    |                             | / /
                     -------------------------------
                     """);
         }
+    }
+    private void randomizeSlots()
+    {
+        machineSlot1 = Random.from()
+    }
+    private static List setProbability()
+    {
+        List<String> options = new ArrayList<>();
+        int x = 5;
+        while (!(x == 30))
+        {
+            for (int i = 0; i < x; i++)
+            {
+                options.add(symbols[(x/5)-1]);
+            }
+            x += 5;
+        }
+        System.out.println(options);
+        return options;
     }
 }
