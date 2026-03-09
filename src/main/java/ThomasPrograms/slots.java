@@ -16,8 +16,8 @@ public class slots
     static String[] symbols = {"♦", "7", "★", "$", "♣"};
     public void game()
     {
-        List probabilitys = setProbability();
-        System.out.println(probabilitys);
+        List probability = setProbability();
+        System.out.println(probability);
         while (true)
         {
             betAmount = betCredits.bet(credits);
@@ -86,24 +86,52 @@ public class slots
                     """);
             optimizations.timer(500);
             clear.clearCMD();
-            randomizeSlots();
-            System.out.println("""
-                    -------------------------------
-                    |                             |
-                    |   -----    -----    -----   |
-                    |   |   |    |   |    |   |   |
-                    |   -----    -----    -----   |
-                    |                             |
-                    |                             |    __
-                    |                             |   / /
-                    |                             | / /
-                    -------------------------------
-                    """);
+            randomizeSlots(probability);
+            System.out.println("-------------------------------\n" +
+                               "|                             |\n" +
+                               "|   -----    -----    -----   |\n" +
+                               "|   | "+ machineSlot1 +" |    | "+ machineSlot2 +" |    | "+ machineSlot3 +" |   |\n" +
+                               "|   -----    -----    -----   |\n" +
+                               "|                             |\n" +
+                               "|                             |    __\n" +
+                               "|                             |   / /\n" +
+                               "|                             | / /\n" +
+                               "-------------------------------\n");
+            optimizations.timer(250);
+            clear.clearCMD();
+            randomizeSlots(probability);
+            System.out.println("-------------------------------\n" +
+                               "|                             |\n" +
+                               "|   -----    -----    -----   |\n" +
+                               "|   | "+ machineSlot1 +" |    | "+ machineSlot2 +" |    | "+ machineSlot3 +" |   |\n" +
+                               "|   -----    -----    -----   |\n" +
+                               "|                             |\n" +
+                               "|                             |    __\n" +
+                               "|                             |   / /\n" +
+                               "|                             | / /\n" +
+                               "-------------------------------\n");
+            optimizations.timer(250);
+            clear.clearCMD();
+            randomizeSlots(probability);
+            System.out.println("-------------------------------\n" +
+                               "|                             |\n" +
+                               "|   -----    -----    -----   |\n" +
+                               "|   | "+ machineSlot1 +" |    | "+ machineSlot2 +" |    | "+ machineSlot3 +" |   |\n" +
+                               "|   -----    -----    -----   |\n" +
+                               "|                             |\n" +
+                               "|                             |    __\n" +
+                               "|                             |   / /\n" +
+                               "|                             | / /\n" +
+                               "-------------------------------\n");
+            System.out.printf("You have a combo of %s, %s, and %s.%n", machineSlot1, machineSlot2, machineSlot3);
         }
     }
-    private void randomizeSlots()
+    private void randomizeSlots(List probability)
     {
-        machineSlot1 = Random.from()
+        Random r = new Random();
+        machineSlot1 = probability.get(r.nextInt(probability.size())).toString();
+        machineSlot2 = probability.get(r.nextInt(probability.size())).toString();
+        machineSlot3 = probability.get(r.nextInt(probability.size())).toString();
     }
     private static List setProbability()
     {
