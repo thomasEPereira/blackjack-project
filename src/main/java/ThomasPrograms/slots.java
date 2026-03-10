@@ -5,7 +5,7 @@ import java.util.*;
 
 public class slots
 {
-    static float credits = 1000;
+    static float credits = 100;
     static float betAmount;
     static String machineSlot1;
     static String machineSlot2;
@@ -34,7 +34,7 @@ public class slots
                     """);
             while (true)
             {
-                System.out.println("\nPull the lever.\n");
+                System.out.println("\nPull the lever.");
                 String input = sc.nextLine();
                 if (optimizations.decapitalizeInput(input).equals("pull") || optimizations.decapitalizeInput(input).isEmpty())
                 {
@@ -71,18 +71,17 @@ public class slots
                     """);
             optimizations.timer(500);
             clear.clearCMD();
-            System.out.println("""
-                    -------------------------------
-                    |                             |
-                    |   -----    -----    -----   |
-                    |   |   |    |   |    |   |   |
-                    |   -----    -----    -----   |
-                    |                             |
-                    |                             |    __
-                    |                             |   / /
-                    |                             | / /
-                    -------------------------------
-                    """);
+            randomizeSlots(probability);
+            System.out.println("-------------------------------\n" +
+                    "|                             |\n" +
+                    "|   -----    -----    -----   |\n" +
+                    "|   | "+ machineSlot1 +" |    | "+ machineSlot2 +" |    | "+ machineSlot3 +" |   |\n" +
+                    "|   -----    -----    -----   |\n" +
+                    "|                             |\n" +
+                    "|                             |    __\n" +
+                    "|                             |   / /\n" +
+                    "|                             | / /\n" +
+                    "-------------------------------\n");
             optimizations.timer(500);
             clear.clearCMD();
             randomizeSlots(probability);
