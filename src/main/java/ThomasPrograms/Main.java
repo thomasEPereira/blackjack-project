@@ -15,7 +15,7 @@ public class Main
             rules.rules(game);
             blackjack.game();
         }
-        else
+        else if (game.equals("slots"))
         {
             rules.rules(game);
             slots.game();

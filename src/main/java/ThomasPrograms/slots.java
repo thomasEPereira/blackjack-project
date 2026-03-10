@@ -1,9 +1,7 @@
 //slots.java
 package ThomasPrograms;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class slots
 {
@@ -13,9 +11,10 @@ public class slots
     static String machineSlot2;
     static String machineSlot3;
     static clearCMD clear = new clearCMD();
-    static String[] symbols = {"♦", "7", "★", "$", "♣"};
+    static String[] symbols = {"♦", "7", "¢", "$", "♣"};
     public void game()
     {
+        Scanner sc = new Scanner(System.in);
         List probability = setProbability();
         System.out.println(probability);
         while (true)
@@ -36,12 +35,13 @@ public class slots
                     """);
             while (true)
             {
-                String input = IO.readln("\nPull the lever.\n");
-                if (optimizations.decapitalizeInput(input).equals("pull"))
+                System.out.println("\nPull the lever.\n");
+                String input = sc.nextLine();
+                if (optimizations.decapitalizeInput(input).equals("pull") || optimizations.decapitalizeInput(input).isEmpty())
                 {
                     break;
                 }
-                System.out.println("Please input pull to pull the lever.");
+                System.out.println("Please input pull or nothing to pull the lever.");
             }
             clear.clearCMD();
             System.out.println("""
@@ -124,6 +124,18 @@ public class slots
                                "|                             | / /\n" +
                                "-------------------------------\n");
             System.out.printf("You have a combo of %s, %s, and %s.%n", machineSlot1, machineSlot2, machineSlot3);
+            int payout = winCon();
+            System.out.println("You got payed out " + payout + "x.\n");
+            credits += betAmount*payout;
+            if (credits == 0)
+            {
+                System.out.println("You have zero credits and leave.");
+                break;
+            }
+            System.out.println("You now have " + credits + " credits.\n\n");
+            System.out.println("Would you like to leave?\n");
+            String leave = sc.nextLine();
+            if (optimizations.decapitalizeInput(leave).equals("yes")) {break;}
         }
     }
     private void randomizeSlots(List probability)
@@ -147,5 +159,52 @@ public class slots
         }
         System.out.println(options);
         return options;
+    }
+    private static int winCon()
+    {
+        int payout = 0;
+        if (machineSlot1.equals(machineSlot2) && machineSlot1.equals(machineSlot3))
+        {
+            //{"♦", "7", "¢", "$", "♣"}
+            switch (machineSlot1)
+            {
+                case "♦" -> payout = 1000;
+                case "7" -> payout = 200;
+                case "¢" -> payout = 30;
+                case "$" -> payout = 10;
+                case "♣" -> payout = 5;
+            }
+        }
+        else if (machineSlot1.equals(machineSlot2) || machineSlot1.equals(machineSlot3))
+        {
+            switch (machineSlot1)
+            {
+                case "♦" -> payout = 500;
+                case "7" -> payout = 100;
+                case "¢" -> payout = 15;
+                case "$" -> payout = 5;
+                case "♣" -> payout = 2;
+            }
+        }
+        else if (machineSlot2.equals(machineSlot3))
+        {
+            switch (machineSlot2)
+            {
+                case "♦" -> payout = 500;
+                case "7" -> payout = 100;
+                case "¢" -> payout = 15;
+                case "$" -> payout = 5;
+                case "♣" -> payout = 2;
+            }
+        }
+        else if (machineSlot1.equals("♦") || machineSlot2.equals("♦") || machineSlot3.equals("♦"))
+        {
+            payout = 2;
+        }
+        else
+        {
+            System.out.println("you got nothing.");
+        }
+        return payout;
     }
 }

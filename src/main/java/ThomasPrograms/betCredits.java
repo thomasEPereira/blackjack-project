@@ -1,18 +1,22 @@
 //betCredits.java
 package ThomasPrograms;
 
+import java.util.Scanner;
+
 public class betCredits
 {
     static int betAmount;
 
     public static int bet(Float credits)
     {
+        Scanner sc = new Scanner(System.in);
         while (true)
         {
             System.out.println("You have " + credits + " credits.");
             try
             {
-                betAmount = Integer.parseInt(IO.readln("How many credits do you want to bet?\n"));
+                System.out.println("How many credits do you want to bet?\n");
+                betAmount = Integer.parseInt(sc.nextLine());
             }
             catch (Exception e) {
                 System.out.println("Please input an value.");

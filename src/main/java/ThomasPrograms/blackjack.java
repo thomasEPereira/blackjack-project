@@ -4,6 +4,7 @@ package ThomasPrograms;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class blackjack
 {
@@ -20,6 +21,7 @@ public class blackjack
     static int aceValue4;
     public void game()
     {
+        Scanner sc = new Scanner(System.in);
         while (true)
         {
             betCredits.bet(credits);
@@ -32,7 +34,8 @@ public class blackjack
             while (true)
             {
                 System.out.println(playersHand);
-                String input = IO.readln("Hit or Stand?\n");
+                System.out.println("Hit or Stand?\n");
+                String input = sc.nextLine();
                 input = optimizations.decapitalizeInput(input);
                 switch (input)
                 {
@@ -105,7 +108,7 @@ public class blackjack
             boolean isWin = determineWin(playersTotal, dealersTotal, player2Total);
             if (isWin)
             {
-                credits += (int) (betAmount*1.5);
+                credits += betAmount*2;
             }
             if (credits == 0)
             {
@@ -113,7 +116,8 @@ public class blackjack
                 break;
             }
             System.out.println("You now have " + credits + " credits.");
-            input = IO.readln("Play again?\n");
+            System.out.println("Play again?\n");
+            input = sc.nextLine();
             if (Objects.equals(optimizations.decapitalizeInput(input), "no"))
             {
                 System.out.println("Quiting game.");
@@ -133,6 +137,7 @@ public class blackjack
                 aceValue4 = 0;
             }
         }
+        sc.close();
     }
 
     public void draw(List hand)
@@ -279,12 +284,14 @@ public class blackjack
     public static int dertermineAce(List hand)
     {
         int aceValue;
+        Scanner sc = new Scanner(System.in);
         if (hand == playersHand)
         {
             while (true)
             {
                 System.out.println("You have a hand of " + playersHand + ".");
-                aceValue = Integer.parseInt(IO.readln("You drew an ace. Do you want your ace to be an 11 or a 1? "));
+                System.out.println("You drew an ace. Do you want your ace to be an 11 or 1?\n");
+                aceValue = Integer.parseInt(sc.nextLine());
                 if (aceValue == 11 || aceValue == 1)
                 {
                     break;
