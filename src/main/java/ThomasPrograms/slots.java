@@ -16,7 +16,6 @@ public class slots
     {
         Scanner sc = new Scanner(System.in);
         List probability = setProbability();
-        System.out.println(probability);
         while (true)
         {
             betAmount = betCredits.bet(credits);
@@ -125,7 +124,7 @@ public class slots
                                "-------------------------------\n");
             System.out.printf("You have a combo of %s, %s, and %s.%n", machineSlot1, machineSlot2, machineSlot3);
             int payout = winCon();
-            System.out.println("You got payed out " + payout + "x.\n");
+            System.out.println("You got payed out " + payout + " : 1.\n");
             credits += betAmount*payout;
             if (credits == 0)
             {
@@ -133,7 +132,7 @@ public class slots
                 break;
             }
             System.out.println("You now have " + credits + " credits.\n\n");
-            System.out.println("Would you like to leave?\n");
+            System.out.println("Would you like to leave?");
             String leave = sc.nextLine();
             if (optimizations.decapitalizeInput(leave).equals("yes")) {break;}
         }
@@ -157,7 +156,6 @@ public class slots
             }
             x += 5;
         }
-        System.out.println(options);
         return options;
     }
     private static int winCon()
@@ -199,7 +197,7 @@ public class slots
         }
         else if (machineSlot1.equals("♦") || machineSlot2.equals("♦") || machineSlot3.equals("♦"))
         {
-            payout = 2;
+            payout = 1;
         }
         else
         {

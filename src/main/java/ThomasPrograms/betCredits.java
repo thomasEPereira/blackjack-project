@@ -15,7 +15,7 @@ public class betCredits
             System.out.println("You have " + credits + " credits.");
             try
             {
-                System.out.println("How many credits do you want to bet?\n");
+                System.out.println("How many credits do you want to bet?");
                 betAmount = Integer.parseInt(sc.nextLine());
             }
             catch (Exception e) {
