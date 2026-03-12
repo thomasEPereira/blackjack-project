@@ -162,7 +162,6 @@ public class slots
         int payout = 0;
         if (machineSlot1.equals(machineSlot2) && machineSlot1.equals(machineSlot3))
         {
-            //{"♦", "7", "¢", "$", "♣"}
             switch (machineSlot1)
             {
                 case "♦" -> payout = 1000;
@@ -187,10 +186,10 @@ public class slots
         {
             switch (machineSlot2)
             {
-                case "♦" -> payout = 500;
-                case "7" -> payout = 100;
-                case "¢" -> payout = 15;
-                case "$" -> payout = 5;
+                case "♦" -> payout = 100;
+                case "7" -> payout = 50;
+                case "¢" -> payout = 5;
+                case "$" -> payout = 3;
                 case "♣" -> payout = 2;
             }
         }

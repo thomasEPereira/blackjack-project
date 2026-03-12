@@ -24,7 +24,7 @@ public class blackjack
         Scanner sc = new Scanner(System.in);
         while (true)
         {
-            betCredits.bet(credits);
+            betAmount = betCredits.bet(credits);
             doubleDraw(dealerHand);
             System.out.println("The dealer has a " + dealerHand.get(1) + " and 1 flipped over card.");
             doubleDraw(player2Hand);
@@ -72,13 +72,17 @@ public class blackjack
                 if (player2Total < 17)
                 {
                     System.out.println("The other player hits.");
-                    draw(player2Hand);
-                    System.out.println("The dealer passes a card to the other player and flips it over.");
-                    System.out.println("The other player drew a " + player2Hand.getLast() + ".");
-                    player2Total = handTotal(playersHand);
-                    System.out.println("The other player now has a total of " + player2Total + ".\n");
-                    optimizations.timer(3000);
-                    continue;
+                    boolean isDrawable = draw(player2Hand);
+                    if (isDrawable)
+                    {
+                        System.out.println("The dealer passes a card to the other player and flips it over.");
+                        System.out.println("The other player drew a " + player2Hand.getLast() + ".");
+                        player2Total = handTotal(playersHand);
+                        System.out.println("The other player now has a total of " + player2Total + ".\n");
+                        optimizations.timer(3000);
+                        continue;
+                    }
+                    break;
                 }
                 System.out.println("The other player ends their with a " + player2Total + ". And a hand of " + player2Hand + ".\n");
                 break;
@@ -95,12 +99,16 @@ public class blackjack
                 if (dealersTotal < 17)
                 {
                     System.out.println("The dealer flips a card over from the top of the deck.");
-                    draw(dealerHand);
-                    System.out.println("The dealer draws a " + dealerHand.getLast() + ".");
-                    dealersTotal = handTotal(dealerHand);
-                    System.out.println("The dealer has a total of " + dealersTotal + ".\n");
-                    optimizations.timer(3000);
-                    continue;
+                    boolean isDrawable = draw(dealerHand);
+                    if (isDrawable)
+                    {
+                        System.out.println("The dealer draws a " + dealerHand.getLast() + ".");
+                        dealersTotal = handTotal(dealerHand);
+                        System.out.println("The dealer has a total of " + dealersTotal + ".\n");
+                        optimizations.timer(3000);
+                        continue;
+                    }
+                    break;
                 }
                 System.out.println("The dealers ends his turn with a " + handTotal(dealerHand) + ". And a hand of " + dealerHand + ".\n");
                 break;
@@ -108,7 +116,7 @@ public class blackjack
             boolean isWin = determineWin(playersTotal, dealersTotal, player2Total);
             if (isWin)
             {
-                credits += betAmount*2;
+                credits = credits + betAmount*2;
             }
             if (credits == 0)
             {
@@ -139,23 +147,30 @@ public class blackjack
         }
     }
 
-    public void draw(List hand)
+    public boolean draw(List hand)
     {
-        String card = deck.getFirst().toString();
-        hand.add(card);
-        deck.removeFirst();
-        final boolean isAce = String.valueOf(card.charAt(0)).equals("A");
-        if (hand == playersHand && isAce)
+        if (!deck.isEmpty())
         {
-            assignAceValue(playersHand, card);
+            String card = deck.getFirst().toString();
+            hand.add(card);
+            deck.removeFirst();
+            final boolean isAce = String.valueOf(card.charAt(0)).equals("A");
+            if (hand == playersHand && isAce)
+            {
+                assignAceValue(playersHand, card);
+            } else if (hand == dealerHand && isAce)
+            {
+                assignAceValue(dealerHand, card);
+            } else if (hand == player2Hand && isAce)
+            {
+                assignAceValue(player2Hand, card);
+            }
+            return true;
         }
-        else if (hand == dealerHand && isAce)
+        else
         {
-            assignAceValue(dealerHand, card);
-        }
-        else if (hand == player2Hand && isAce)
-        {
-            assignAceValue(player2Hand, card);
+            System.out.println("The deck is empty.");
+            return false;
         }
     }
 
