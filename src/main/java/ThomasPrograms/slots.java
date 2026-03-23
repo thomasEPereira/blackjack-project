@@ -175,10 +175,10 @@ public class slots
         {
             switch (machineSlot1)
             {
-                case "♦" -> payout = 500;
-                case "7" -> payout = 100;
-                case "¢" -> payout = 15;
-                case "$" -> payout = 5;
+                case "♦" -> payout = 100;
+                case "7" -> payout = 50;
+                case "¢" -> payout = 5;
+                case "$" -> payout = 3;
                 case "♣" -> payout = 2;
             }
         }

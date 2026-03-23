@@ -288,14 +288,14 @@ public class blackjack
     {
         switch (String.valueOf(card.charAt(7)))
         {
-            case "C" -> aceValue1 = dertermineAce(hand);
-            case "D" -> aceValue2 = dertermineAce(hand);
-            case "H" -> aceValue3 = dertermineAce(hand);
-            case "S" -> aceValue4 = dertermineAce(hand);
+            case "C" -> aceValue1 = determineAce(hand);
+            case "D" -> aceValue2 = determineAce(hand);
+            case "H" -> aceValue3 = determineAce(hand);
+            case "S" -> aceValue4 = determineAce(hand);
         }
     }
 
-    public static int dertermineAce(List hand)
+    public static int determineAce(List hand)
     {
         int aceValue;
         Scanner sc = new Scanner(System.in);
