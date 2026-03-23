@@ -25,6 +25,7 @@ public class blackjack
         while (true)
         {
             betAmount = betCredits.bet(credits);
+            credits -= betAmount;
             doubleDraw(dealerHand);
             System.out.println("The dealer has a " + dealerHand.get(1) + " and 1 flipped over card.");
             doubleDraw(player2Hand);
@@ -116,7 +117,7 @@ public class blackjack
             boolean isWin = determineWin(playersTotal, dealersTotal, player2Total);
             if (isWin)
             {
-                credits = credits + betAmount*2;
+                credits += betAmount*2;
             }
             if (credits == 0)
             {
